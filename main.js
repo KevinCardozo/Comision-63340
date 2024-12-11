@@ -16,6 +16,12 @@ function logueoDeUsuario(){
                 alert("contraseña incorrecta, volve a intentar")
         }
     }
-    alert("CUENTA BLOQUEDA, RECUPERAR CONTRASEÑA")
+    if(ingreso==true){
+        alert("INGRESASTE A TU CUENTA")
+    }
+    else{
+        alert("CUENTA BLOQUEADA, RECUPERAR CONTRASEÑA")
+    }
+    
 }
 logueoDeUsuario();
