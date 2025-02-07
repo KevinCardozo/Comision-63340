@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>CINECENTER</h1>
+        </div>
+        <nav>
+            <ul class="navBar">
+                <li><a href="../index.html">INICIO</a></li>
+                <li><a href="">PELICULAS</a></li>
+                <li><a href="./contacto.html">CONTACTO</a></li>
+                <li><a href="">NOSOTROS</a></li>
+                <li><a href="./login.html"><img src="../assets/miCuenta.png" alt="Mi cuenta"></a></li>
+            </ul>
+        </nav>
+     
+    </header>
+    <main>
+        <h2>SELECCIONAR LAS BUTACAS</h2>
+        <h3>PRECIO DE LA ENTRADA: $5000</h3>
+        <section class="contenedorButacas">
+            <div id="contenedorButacas" class="butacas">
+            </div>
+        </section>
+        <form class="compra" id="FormEntradas">
+            <h3>Ingresa tus datos</h3>
+            <input type="email" id="emailEntradas" placeholder="Ingresa tu mail">
+            <input type="tel" id="TelefonoEntradas" placeholder="Ingresa tu telefono">
+            <button type="submit" id="botonEntradas">SIGUIENTE</button>
+        </form>
+    </main>
+    <script src="../main.js"></script>
+</body>
+</html>

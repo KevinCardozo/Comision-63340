@@ -1,88 +1,14 @@
-// let inputUs= document.getElementById("campoText")
-// inputUs.addEventListener("input", function(event){
-//     console.log("el valor Del campo cambia a: " + event.target.value)
-// })
+function Usuario (nombre, contrasenia, edad, localidad) {
+    this.nombre= nombre
+    this.edad= edad
+    this.contrasenia= contrasenia
+    this.localidad= localidad
+}
 
-// boton.onclick = () => {alert("logeando")}
-
-
-
-// function Usuario (nombre, contrasenia, edad, localidad) {
-//     this.nombre= nombre
-//     this.edad= edad
-//     this.contrasenia= contrasenia
-//     this.localidad= localidad
-//     this.entradasAdquiridas= 0
-// }
-
-// function Butaca (numero, estado){
-//     this.numero= numero
-//     this.estado= estado
-// }
-
-
-// function registroUsuario(){
-//     let nombre= prompt("Ingrese su nombre de usuario").toUpperCase()
-//     if(nombre==""){
-//         alert("valor incorrecto")
-//         return
-//     }
-
-//     let contrasenia= prompt("Ingrese la contraseña").toUpperCase()
-//     if(contrasenia==""){
-//         alert("valor incorrecto")
-//         return
-//     }
-//     let edad= parseInt(prompt("ingrese su edad"))
-//     if(edad == isNaN){
-//         alert("valor incorrecto")
-//         return
-//     }
-//     let localidad= prompt("ingrese su localidad").toUpperCase()
-//     let usuario= new Usuario(nombre, contrasenia,edad,localidad)
-
-//     usuarios.push(usuario)
-//     console.log(usuarios)
-
-// }
-
-// let registro= document.getElementById("registrar")
-// registro.addEventListener("click", registroUsuario)
-
-
-//LOGIN
-// document.getElementById("loginForm").addEventListener("submit", function(e){
-//     e.preventDefault()
-// })
-
-// function logueoDeUsuario(){
-//     const usuarioIngreso= document.getElementById("username").value;
-//     const contraseñaIngreso= document.getElementById("password").value
-//     let ingreso= false
-//     let cantidadDeErrores= 0;
-//     while (cantidadDeErrores<3 && ingreso==false){
-//         for(const x of usuarios){
-//             if(x.nombre == usuarioIngreso && x.contrasenia== contraseñaIngreso){
-//                 alert("ingresando a tu cuenta");
-//                 ingreso= true;
-//             }
-//             else{
-//                 cantidadDeErrores++;
-//                 alert("contraseña o usuario incorrecto, volve a intentar")
-//             }
-//         }   
-//     }
-//     if(ingreso==true){
-//         alert("INGRESANDO A TU CUENTA")
-//     }
-//     else{
-//         alert("cuenta bloqueada, recuperar contraseña")
-//     }
-// }
-//     let boton= document.getElementById("boton")
-//     boton.addEventListener("click", logueoDeUsuario)
-//     console.log(usuarioIngreso)
-//     console.log(contraseñaIngreso)
+function Butaca (numero, estado){
+    this.numero= numero
+    this.estado= estado
+}
 
 function Pelicula (nombreDePelicula, categoria, duracion){
     this.nombreDePelicula= nombreDePelicula
@@ -90,160 +16,214 @@ function Pelicula (nombreDePelicula, categoria, duracion){
     this.duracion= duracion
 }
 
-const peliculas= []
-
-const pelicula1= new Pelicula("parasite", "terror", 125)
-const pelicula3= new Pelicula("300", "historia", 130)
-const pelicula2= new Pelicula("el conjuro", "terror", 150)
-
-peliculas.push(pelicula1)
-peliculas.push(pelicula3)
-peliculas.push(pelicula2)
-
-function filtrar(){
-    Swal.fire({
-        title: "INGRESA EL NOMBRE DE LA PELICULA",
-        input: "text",
-        showCancelButton: true,
-        confirmButtonText: "BUSCAR",
-        showLoaderOnConfirm: true,
 
 
-        preConfirm: (palabraClave)=>{
-            palabraClave = palabraClave.trim().toUpperCase()
-            let resultado = peliculas.filter( (pelicula)=> pelicula.nombreDePelicula.toUpperCase().includes(palabraClave))
-            if(resultado.length>0){
-                Swal.fire({
-                    title: "Este es el resultado de tu busqueda",
-                    html: '<table> <tr> <th> Nombre </th> <th> categoria </th> <th> duracion </th> </tr> <table/>' + 
-                    resultado.map((  (pelicula)=> `<tr><td> ${pelicula.nombreDePelicula} </td><td> ${pelicula.categoria} </td><td> ${pelicula.duracion} </td>`))
-                })
-            } else{
-                Swal.fire({
-                    title:`no se encuentra coincidencias`,
-                    icon:'error',
-                    confirmButtonText: `ok`,
-                })
-            }
+setTimeout(()=>{
+    const formularioCompra= document.getElementById("FormEntradas").addEventListener("submit", function(e){
+        e.preventDefault();
+        const emailCompra= document.getElementById("emailEntradas")
+        const telCompra= document.getElementById("TelefonoEntradas")
+    
+        const datosDeCompra = {
+            mail: emailCompra.value,
+            tel: telCompra.value
         }
+        if(datosDeCompra.mail && datosDeCompra.tel){
+            let compra= JSON.stringify(datosDeCompra)
+            localStorage.setItem('datos de compra', compra)
+            window.location.href= "datosCompra.html"
+        }
+     
+        
     })
-}
 
 
+},1)
 
 
+const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDc5YjhlM2QxNTY2MmU1MTNkMDg0NGNhZTQ1Y2JjMCIsIm5iZiI6MTczODI3OTg5OC42OTYsInN1YiI6IjY3OWMwYmRhMzVlMzFkY2VlNzRkMGMxOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1Doxhv3loQYCSdQap3_o7kxbPS4UUlXjQKYDZChr2bc'
+    }
+  };
 
+const url= 'https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1'
+const peliculaContainer= document.getElementById("container")
+fetch(url, options)
+    .then(res => res.json())
+    .then(res => {
+        const peliculas= res.results
+        peliculas.forEach((pelicula) => {
+                const peliculaElement= document.createElement("div")
+                const imageUrl =  `https://image.tmdb.org/t/p/w500${pelicula.poster_path} `
+                peliculaElement.innerHTML = `
+            <a href=./pages/selectorDeButacas.html><img src= "${imageUrl}" alt="${pelicula.original_title}" ></a>
+             <h2>${pelicula.original_title}</h2>`
 
+             const select= peliculaElement.querySelector('a')
+             select.addEventListener("click", ()=>{
+                localStorage.setItem('pelicula elegida', pelicula.original_title )
+                localStorage.removeItem('butacas Seleccionadas')
+             })
+             
+            
+             
+            peliculaContainer.appendChild(peliculaElement)
+            })
+    })
+    .catch(err => console.error(err));
 
+    function filtrar(){
+        Swal.fire({
+            title: "INGRESA EL NOMBRE DE LA PELICULA",
+            input: "text",
+            showCancelButton: true,
+            confirmButtonText: "BUSCAR",
+            showLoaderOnConfirm: true,
+            preConfirm: (palabraClave)=>{
+                palabraClave = palabraClave.trim().toUpperCase()
+                fetch(url,options)
+                .then(res=> res.json())
+                .then(data=> {
+                    const peliculas= data.results
+                    let resultado= peliculas.filter((pelicula=> pelicula.original_title.toUpperCase().includes(palabraClave)))
+                    if(resultado.length>0){
+                    Swal.fire({
+                        title: "Este es el resultado de tu busqueda",
+                        html: resultado.map( (pelicula)=> `<tr><td> ${pelicula.original_title} </td> <a href=./pages/selectorButacas.html><img src= "${`https://image.tmdb.org/t/p/w500${pelicula.poster_path} `}"></a><td> </td>`)
+                    })
 
-// const butacas = []
+        
+                }else{
+                    Swal.fire({
+                        title:`no se encuentra coincidencias`,
+                        icon:'error',
+                        confirmButtonText: `ok`,
+                    })
+                }})
 
-// function agreagarButacas(cantidadDeButacas){
-//     for(i=0; i<cantidadDeButacas; i++){
-//         butacas.push(new Butaca(i+1,"disponible"));
-//         console.log(butacas)
+                
+                } 
+            })
+        }
+    
+    let botonfiltrar = document.getElementById("filtrar")
+    
+    setTimeout(()=>{
+        botonfiltrar.addEventListener("click", filtrar)
+    }, 1)
+    ;
 
-//     }
-// }
-// agreagarButacas(10)
+    const botonEntradas= document.getElementById("botonEntradas")
+    setTimeout(()=>{
+        botonEntradas.addEventListener("click", function(){
+            const entradas= parseInt(document.getElementById("cantidadDeEntradas").value)
+            const precioEntrada= 5000
+            function comprarEntradas(){
+                let precio= entradas*precioEntrada
+                localStorage.setItem("entradas", precio)
+            }
+            comprarEntradas()
+        })
+    },1)
+ 
+ 
+    const contenedorDatos= document.getElementById("resumenCompra")
 
-// function butacaDisponible() {
-//     for(i=0; i < butacas.length; i++){
-//         if(butacas[i].estado == "disponible"){
-//             console.log ("Butaca Disponible")
-//              let seleccion= confirm ("Desea seleccionar la butaca " + butacas[i].numero + " ?")
-//                 if(seleccion == true){
-//                     butacas[i].estado = "ocupado"
-//                     console.log("Su butaca es la N° " + butacas[i].numero)
-//                     break
-//                 } 
-//         }
-//         else {
-//             console.log("Butaca ocupada")
-//         }
-//     }
-//     let otraButaca= confirm("Desea selecionar otra butaca?")
-//     if(otraButaca==true){
-//         butacaDisponible()
-//     }
-// }
-// butacaDisponible()
-// // butacaDisponible()
+const butacas = []
 
+const contenedorButacas= document.getElementById("contenedorButacas")
 
-// function BuscarButaca(){
-//     let butacaSeleccionada= parseInt(prompt ("ingrese el numero de butaca"))
-//     // let resultado= butacas.filter((x)=>x.numero.toUpperCase().includes(butacaSeleccionada))
-//     let resultado = butacas.find((x)=> x.numero === butacaSeleccionada)
-//     if(resultado != undefined){
-//         console.log(resultado)
-//     }
-//     else{
-//         alert("no se encontro")
-//     }
-// }
-// BuscarButaca()
-
-
-
-
-
-
-
-// function comprarEntradas(){
-//     let precioEntrada= 5000;
-//     let cantidadDeEntradas= parseInt (prompt(" EL PRECIO DE CADA ENTRADA ES DE "+ precioEntrada + " ELIGE LA CANTIDAD DE ENTRADAS QUE DESEAS COMPRAR"))
-//     let TotalAPagar= precioEntrada*cantidadDeEntradas; 
-//     if(notNaN== cantidadDeEntradas){
-//         alert("ingrese un valor correcto")
-//         return 
-//     } 
-//     alert ("LA CANTIDAD DE ENTRADAS SON " + cantidadDeEntradas + " Y EL TOTAL A PAGAR ES " + TotalAPagar);
-//     (x) =>  x.entradasAdquiridas + cantidadDeEntradas
-
-//     console.log(usuarios)
-// }
-
-
-// formulario
-
-
-
-
-
-//agreagar peliculas a la cartelera
-
-
-
-
-// function agregarPelicula(){
-
-//     Swal.fire({
-//         title: "Ingresa el nombre de la pelicula",
-//         input: "text",
-//         title: "Ingrese la categoria",
-//         input: "text",
-//         title: "ingrese la duracion"
-//     })
-
-
-
-
-
-
-    // let nombre= document.getElementById("nombrePelicula")
-    // let categoria= document.getElementById("categoria")
-    // let duracion= document.getElementById("duracion")
-
-    // if(isNaN==duracion|| categoria== "" || nombre==""){
-    //     alert("alguno de los valores es incorrecto")
-    // }
+const precioEntrada= 5000
+setTimeout(function agregarButacas(){
+    for(let i =0; i<156; i++){
+        butacas.push(new Butaca(i+1,"disponible"));
+        let button= document.createElement("button")
+        button.innerHTML= i+1
+        contenedorButacas.appendChild(button)
+        button.addEventListener("click", ()=>{
+            seleccionButacas(button)
+        })
         
 
 
-//BOTONERA 
-let botonfiltrar = document.getElementById("filtrar")
-botonfiltrar.addEventListener("click", filtrar)
+    }
+    function seleccionButacas(but){
+        const butacaElegida= parseInt(but.innerText)
+        let seleccionadas = JSON.parse(localStorage.getItem('butacas Seleccionadas')) || []
+        
+        if(seleccionadas.includes(butacaElegida)){
+            seleccionadas= seleccionadas.filter(butaca=> butaca !== butacaElegida)
+            but.style.backgroundColor= "";
+        }
+        else{
+            seleccionadas.push(butacaElegida)
+            but.style.backgroundColor = "red"
+        }
+        const precio= JSON.parse(seleccionadas.length* precioEntrada)
+        localStorage.setItem('precio', precio)
+        localStorage.setItem('butacas Seleccionadas', JSON.stringify(seleccionadas))
+        }
+
+    },1)
+
+
+
+
+
+function datos(){
+    let peliculaElegida= localStorage.getItem('pelicula elegida')
+    let peli= document.createElement("h3")
+    peli.innerHTML= "Pelicula: "+ peliculaElegida
+    contenedorDatos.appendChild(peli)
+    let datos= JSON.parse(localStorage.getItem('datos de compra'))
+    let mail= document.createElement("h3")
+    mail.innerHTML= "Mail: " + datos.mail
+    contenedorDatos.appendChild(mail)
+    let tel= document.createElement("h3")
+    tel.innerHTML= "Telefono: " + datos.tel
+    contenedorDatos.appendChild(tel)
+    let butacaStorage= JSON.parse(localStorage.getItem('butacas Seleccionadas'))
+    let butaca= document.createElement("h3")
+    butaca.innerHTML= "N° de butaca: " + butacaStorage
+    contenedorDatos.appendChild(butaca)
+    let precioFinal= localStorage.getItem('precio')
+    let precio= document.createElement("h3")
+    precio.innerHTML= "TOTAL: $" + precioFinal
+    contenedorDatos.appendChild(precio)
+}
+datos()
+
+const confirm= document.getElementById("confirmacion").addEventListener("click",()=>{
+    
+    let datos= JSON.parse(localStorage.getItem('datos de compra'))
+    Swal.fire({
+        title: "COMPRA CONFIRMADA",
+        text: "enviamos los datos de la compra a tu mail: " + datos.mail,
+        icon: "success",
+        confirmButtonText: "CONTINUAR"
+    })
+    .then((result)=>{
+        if(result.isConfirmed){
+            window.location.href= "../index.html"
+        }
+    })
+} )
+
+
+
+    
+    
+
+
+
+
+
+ 
+
+
 
 
 

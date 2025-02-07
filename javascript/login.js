@@ -36,12 +36,19 @@ document.addEventListener("DOMContentLoaded", function() {
                     icon: "success",
                     confirmButtonText: "CONTINUAR"
                 })
+                .then((result)=>{
+                    if(result.isConfirmed){
+                        window.location.href= "../index.html"
+                    }
+                })
             } else {
                 Swal.fire({
                     title:"Contraseña o usuario incorrecto",
                     icon: "error",
                     confirmButtonText: "CONTINUAR"
-                });
+                })
+                
+
             }
         }
     
